@@ -1,0 +1,70 @@
+[gd_scene load_steps=13 format=3 uid="uid://y32vtyht4tpo"]
+
+[ext_resource type="Script" path="res://.godot/DirectionalLight3D.gd" id="1_w8psx"]
+[ext_resource type="Script" path="res://.godot/Node3D.gd" id="2_pedcw"]
+[ext_resource type="Script" path="res://.godot/CSGSphere3D.gd" id="3_lpp2j"]
+[ext_resource type="Script" path="res://.godot/Player.gd" id="4_2ihhp"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_qsaim"]
+
+[sub_resource type="Skin" id="Skin_yk2mu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xkk4o"]
+albedo_color = Color(0.654902, 0.490196, 0.898039, 1)
+
+[sub_resource type="Environment" id="Environment_3m6jx"]
+background_mode = 1
+background_color = Color(0.667205, 0.857586, 0.928373, 1)
+ambient_light_color = Color(0.843137, 0.639216, 0.796078, 1)
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_o2t5w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yxpbv"]
+albedo_color = Color(0.34902, 1, 0.964706, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4l1k5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ldvuq"]
+albedo_color = Color(0.329412, 0.333333, 0.337255, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.994467, 0.105049, 0, -0.105049, 0.994467, -0.0866847, 2.43966, 4.48899)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(50, 0, 0, 0, -1.09278e-06, 25, 0, -25, -1.09278e-06, 0, 0, 0)
+mesh = SubResource("QuadMesh_qsaim")
+skin = SubResource("Skin_yk2mu")
+surface_material_override/0 = SubResource("StandardMaterial3D_xkk4o")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3m6jx")
+camera_attributes = SubResource("CameraAttributesPractical_o2t5w")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, 2.18557e-08, -0.5, 0.5, -3.78552e-08, 0.866025, 0, -1, -4.37114e-08, -1.37524, 3.60576, 0)
+light_color = Color(0.831373, 0.607843, 0.580392, 1)
+script = ExtResource("1_w8psx")
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.900746, 0)
+script = ExtResource("2_pedcw")
+
+[node name="RightEye" type="CSGSphere3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.312682, 0.601318, 0.314734)
+radius = 0.172826
+material = SubResource("StandardMaterial3D_yxpbv")
+script = ExtResource("3_lpp2j")
+
+[node name="LeftEye" type="CSGSphere3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.244685, 0.429861, 0.416867)
+radius = 0.172826
+material = SubResource("StandardMaterial3D_yxpbv")
+script = ExtResource("3_lpp2j")
+
+[node name="Player" type="MeshInstance3D" parent="Node3D"]
+mesh = SubResource("CapsuleMesh_4l1k5")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ldvuq")
+script = ExtResource("4_2ihhp")
